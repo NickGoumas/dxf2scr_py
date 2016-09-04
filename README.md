@@ -5,7 +5,7 @@ Using python 2.7. Using SolidWorks 2016 to save DXF files in version R12 for tes
 
 This is starting off as a simple script. It may grow into a more user friendly GUI as time goes on. The purpose of this project is twofold. To build a usable tool and also get some experience using git. As always, time spent coding python is always welcome.
 
-Currently the DXF file and the scr file are both hardcoded. Lines 4 and 6 respectively. 
+Currently the DXF file and the scr file are both hardcoded. Lines 4 and 6 respectively. The output file 'testOutput.scr' is also hardcoded. Just make a blank file it can overwrite for now.
 
 So far it can convert from DXF to scr the following entities: (DXF -> scr)
 
