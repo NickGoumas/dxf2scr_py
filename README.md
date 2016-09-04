@@ -8,9 +8,13 @@ This is starting off as a simple script. It may grow into a more user friendly G
 Currently the DXF file and the scr file are both hardcoded. Lines 4 and 6 respectively. 
 
 So far it can convert from DXF to scr the following entities: (DXF -> scr)
+
   LINE -> WIRE
+  
   CIRCLE -> CIRCLE
+  
   ARC -> ARC
 
 Now working on:
+
   POLYLINE -> WIRE
