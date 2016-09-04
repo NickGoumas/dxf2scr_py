@@ -47,20 +47,16 @@ for e in modelspace:
 
 for e in modelspace:
     if e.dxftype() == 'POLYLINE':
-        print e.is_2d_polyline
-        print e.__len__()
-        
-        print list(e.points())[0]
-        
+        #print e.is_2d_polyline
+        for i in range(1,e.__len__()):
+            polyStartX = round(list(e.points())[i-1][0], 4)
+            polyStartY = round(list(e.points())[i-1][1], 4)
+            polyEndX = round(list(e.points())[i][0], 4)
+            polyEndY = round(list(e.points())[i][1], 4)
+            if polyStartX != polyEndX or polyStartY != polyEndY:
+                polyOutput = ('WIRE ({} {}) ({} {})\n').format(polyStartX, polyStartY, polyEndX, polyEndY)
+                print polyOutput,
+                file.write(polyOutput)        
         #Round points. Iterate through. If the two points are different create a line between, else skip the step.
-        
-        #No damn ellipse command in eagle apparently.
-        #print 'test'
-        #print ('Center Point:{}').format(str(e.dxf.enter))
-        #print ('Major Axis:{}').format(str(e.dxf.major_axis))
-
-
-
-        
 
 file.close()
