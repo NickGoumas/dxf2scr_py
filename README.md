@@ -18,3 +18,5 @@ So far it can convert from DXF to scr the following entities: (DXF -> scr)
 Now working on:
 
   POLYLINE -> WIRE
+
+Testing if git will push this edit.
