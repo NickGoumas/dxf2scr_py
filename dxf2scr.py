@@ -1,7 +1,8 @@
+import sys
 import math
 import ezdxf
 
-dwg = ezdxf.readfile("C:\Users\Nick\Desktop\Test Folder\TestPart1.DXF")
+dwg = ezdxf.readfile(str(sys.argv[1]))
 
 file = open('testOutput.scr', 'r+')
 
