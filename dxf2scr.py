@@ -6,10 +6,12 @@ dwg = ezdxf.readfile(str(sys.argv[1]))
 
 file = open('testOutput.scr', 'r+')
 
+''' Will add a switch flag for INCH or MM later '''
 gridOutput = 'GRID {};\n'.format('INCH')
 print gridOutput,
 file.write(gridOutput)
 
+''' Layer 20 is the dimension layer in Eagle '''
 layerOutput = 'LAYER {};\n'.format('20')
 print layerOutput,
 file.write(layerOutput)
