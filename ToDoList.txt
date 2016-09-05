@@ -1,0 +1,9 @@
+Create output file if it doesn't exist.
+
+Use a variable in the rounding functions to control the resolution of polylines.
+
+Test with other versions of DXF files.
+
+Use command line arguments to define the 'layer' and 'grid' variables, with defaults if they're not specified.
+
+
