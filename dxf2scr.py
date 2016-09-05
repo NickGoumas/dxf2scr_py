@@ -73,7 +73,5 @@ for e in modelspace:
             if polyStartX != polyEndX or polyStartY != polyEndY:
                 polyOutput = ('WIRE ({} {}) ({} {})\n').format(polyStartX, polyStartY, polyEndX, polyEndY)
                 print polyOutput,
-                file.write(polyOutput)        
-        #Round points. Iterate through. If the two points are different create a line between, else skip the step.
-
+                file.write(polyOutput)
 file.close()
