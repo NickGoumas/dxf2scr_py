@@ -11,3 +11,5 @@ Use command line arguments to define the 'layer' and 'grid' variables, with defa
 Single loop running all the functions.
 
 Context manager, (with statement to open and process files) for error handling.
+
+Edit file and variable names to be more human readable.
