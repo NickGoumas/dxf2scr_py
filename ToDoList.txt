@@ -8,4 +8,4 @@ Context manager, (with statement to open and process files) for error handling.
 
 *** Force 0 width lines. Figure out what do default to for others. ***
 
-Write a small help function
+Write a small help function.
