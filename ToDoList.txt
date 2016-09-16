@@ -2,10 +2,8 @@ Test with other versions of DXF files.
 
 Use command line arguments to define the 'layer' and 'grid' variables, with defaults if they're not specified.
 
-Context manager, (with statement to open and process files) for error handling.
-
-*** If circles are too under a certain size, generate drill tool instead of circle.***
-
-*** Force 0 width lines. Figure out what do default to for others. ***
+Context manager, (with statement to open and process files) for error handling. If second arg isn't specified throw error.
 
 Write a small help function.
+
+Can I add comments to the script so humans can edit later?
