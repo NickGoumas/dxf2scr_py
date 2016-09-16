@@ -20,4 +20,4 @@ Things to know:
     CIRCLE entities in eagle default to width 1mil.
     There is a debug flag to print the output to the shell.
     Entities in eagle default to layer 20 right now.
-    CIRCLE entities <= 0.25 (drillThreshold) become drill holes in eagle
+    CIRCLE entities <= 0.25 (drillThreshold) become drill holes in eagle.
