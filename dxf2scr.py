@@ -26,11 +26,21 @@ layerOutput = 'LAYER {};\n'.format('20')
 file.write(layerOutput)
 if debugMode == 1:
     print layerOutput,
+    
+'''Force wires to go from point to point.'''
+wireBend = 'SET WIRE_BEND 2;\n'
+file.write(wireBend)
+if debugMode == 1:
+    print wireBend,
 
 modelspace = dwg.modelspace()
 
 def makeLine(e):
-    lineOutput = ('WIRE 0 ({} {}) ({} {})\n'.format(str(e.dxf.start[0]), str(e.dxf.start[1]), str(e.dxf.end[0]), str(e.dxf.end[1])))
+    startX = str(round(e.dxf.start[0], 3))
+    startY = str(round(e.dxf.start[1], 3))
+    endX = str(round(e.dxf.end[0], 3))
+    endY = str(round(e.dxf.end[1], 3))
+    lineOutput = ('WIRE 0 ({} {}) ({} {})\n'.format(startX, startY, endX, endY))
     file.write(lineOutput)
     if debugMode == 1:
         print lineOutput,
@@ -40,7 +50,12 @@ def makeLine(e):
     '''
     
 def makeCircle(e):
-    circleOutput = ('CIRCLE 0.001 ({} {}) ({} {})\n'.format(str(e.dxf.center[0]), str(e.dxf.center[1]), str(e.dxf.radius+e.dxf.center[0]), str(e.dxf.center[1])))
+    centerX = str(round(e.dxf.center[0], 3))
+    centerY = str(round(e.dxf.center[1], 3))
+    pointX = str(round(e.dxf.radius + e.dxf.center[0], 3))
+    pointY = centerY
+    lineWidth = 0.001
+    circleOutput = ('CIRCLE {} ({} {}) ({} {})\n'.format(lineWidth, centerX, centerY, pointX, pointY))
     file.write(circleOutput)
     if debugMode == 1:
         print circleOutput,
