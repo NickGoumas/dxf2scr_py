@@ -4,9 +4,9 @@ import ezdxf
 
 outputFilename = str(sys.argv[1]).split('.')[0]
 outputFilename = outputFilename + '.scr'
-file = open(outputFilename, 'w')
 
 dwg = ezdxf.readfile(str(sys.argv[1]))
+modelspace = dwg.modelspace()
 
 '''Debug mode prints all output if equal to 1'''
 debugMode = 0
@@ -15,25 +15,22 @@ debugMode = 0
 be converted to drill holes.'''
 drillThreshold = 0.25
 
-''' Will add a switch flag for INCH or MM later. '''
-gridOutput = 'GRID {};\n'.format('INCH')
-file.write(gridOutput)
-if debugMode == 1:
-    print gridOutput,
-
-''' Layer 20 is the dimension layer in Eagle. '''
-layerOutput = 'LAYER {};\n'.format('20')
-file.write(layerOutput)
-if debugMode == 1:
-    print layerOutput,
-    
-'''Force wires to go from point to point.'''
-wireBend = 'SET WIRE_BEND 2;\n'
-file.write(wireBend)
-if debugMode == 1:
-    print wireBend,
-
-modelspace = dwg.modelspace()
+def setupScript():
+    ''' Will add a switch flag for INCH or MM later. '''
+    gridOutput = 'GRID {};\n'.format('INCH')
+    file.write(gridOutput)
+    if debugMode == 1:
+        print gridOutput,
+    ''' Layer 20 is the dimension layer in Eagle. '''
+    layerOutput = 'LAYER {};\n'.format('20')
+    file.write(layerOutput)
+    if debugMode == 1:
+        print layerOutput,
+    '''Force wires to go from point to point.'''
+    wireBend = 'SET WIRE_BEND 2;\n'
+    file.write(wireBend)
+    if debugMode == 1:
+        print wireBend,
 
 def makeLine(e):
     startX = str(round(e.dxf.start[0], 3))
@@ -111,18 +108,21 @@ def makeDrill(e):
     file.write(drillOutput)
     if debugMode == 1:
         print drillOutput,
-    
-for entity in modelspace:
-    if entity.dxftype() == 'LINE':
-        makeLine(entity)
-    elif entity.dxftype() == 'CIRCLE':
-        if entity.dxf.radius <= drillThreshold / 2:
-            makeDrill(entity)
-        else:
-            makeCircle(entity)
-    elif entity.dxftype() == 'ARC':
-        makeArc(entity)
-    elif entity.dxftype() == 'POLYLINE':
-        makePoly(entity)
 
-file.close()
+def convertEntities(modelspace):
+    for entity in modelspace:
+        if entity.dxftype() == 'LINE':
+            makeLine(entity)
+        elif entity.dxftype() == 'CIRCLE':
+            if entity.dxf.radius <= drillThreshold / 2:
+                makeDrill(entity)
+            else:
+                makeCircle(entity)
+        elif entity.dxftype() == 'ARC':
+            makeArc(entity)
+        elif entity.dxftype() == 'POLYLINE':
+            makePoly(entity)
+
+with open(outputFilename, 'w') as file:
+    setupScript()
+    convertEntities(modelspace)
