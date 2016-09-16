@@ -11,13 +11,17 @@ dwg = ezdxf.readfile(str(sys.argv[1]))
 '''Debug mode prints all output if equal to 1'''
 debugMode = 0
 
-''' Will add a switch flag for INCH or MM later '''
+'''All CIRCLE entities with less than or equal diameter to the threshold will
+be converted to drill holes.'''
+drillThreshold = 0.25
+
+''' Will add a switch flag for INCH or MM later. '''
 gridOutput = 'GRID {};\n'.format('INCH')
 file.write(gridOutput)
 if debugMode == 1:
     print gridOutput,
 
-''' Layer 20 is the dimension layer in Eagle '''
+''' Layer 20 is the dimension layer in Eagle. '''
 layerOutput = 'LAYER {};\n'.format('20')
 file.write(layerOutput)
 if debugMode == 1:
@@ -26,7 +30,7 @@ if debugMode == 1:
 modelspace = dwg.modelspace()
 
 def makeLine(e):
-    lineOutput = ('WIRE ({} {}) ({} {})\n'.format(str(e.dxf.start[0]), str(e.dxf.start[1]), str(e.dxf.end[0]), str(e.dxf.end[1])))
+    lineOutput = ('WIRE 0 ({} {}) ({} {})\n'.format(str(e.dxf.start[0]), str(e.dxf.start[1]), str(e.dxf.end[0]), str(e.dxf.end[1])))
     file.write(lineOutput)
     if debugMode == 1:
         print lineOutput,
@@ -36,7 +40,7 @@ def makeLine(e):
     '''
     
 def makeCircle(e):
-    circleOutput = ('CIRCLE ({} {}) ({} {})\n'.format(str(e.dxf.center[0]), str(e.dxf.center[1]), str(e.dxf.radius+e.dxf.center[0]), str(e.dxf.center[1])))
+    circleOutput = ('CIRCLE 0.001 ({} {}) ({} {})\n'.format(str(e.dxf.center[0]), str(e.dxf.center[1]), str(e.dxf.radius+e.dxf.center[0]), str(e.dxf.center[1])))
     file.write(circleOutput)
     if debugMode == 1:
         print circleOutput,
@@ -84,11 +88,23 @@ def makePoly(e):
     line are the same, the line is skipped. 
     '''
     
+def makeDrill(e):
+    drillDia = str(round(e.dxf.radius * 2, 3))
+    centerX = str(round(e.dxf.center[0], 3))
+    centerY = str(round(e.dxf.center[1], 3))
+    drillOutput = ('HOLE {} ({} {})\n').format(drillDia, centerX, centerY)
+    file.write(drillOutput)
+    if debugMode == 1:
+        print drillOutput,
+    
 for entity in modelspace:
     if entity.dxftype() == 'LINE':
         makeLine(entity)
     elif entity.dxftype() == 'CIRCLE':
-        makeCircle(entity)
+        if entity.dxf.radius <= drillThreshold / 2:
+            makeDrill(entity)
+        else:
+            makeCircle(entity)
     elif entity.dxftype() == 'ARC':
         makeArc(entity)
     elif entity.dxftype() == 'POLYLINE':
