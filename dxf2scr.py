@@ -2,8 +2,17 @@ import sys
 import math
 import ezdxf
 
-outputFilename = str(sys.argv[1]).split('.')[0]
-outputFilename = outputFilename + '.scr'
+try:
+    len(sys.argv[2])
+    try:
+        outputFilename = str(sys.argv[2]).split('.')[0]
+        outputFilename = outputFilename + '.scr'
+    except:
+        outputFilename = outputFilename + '.scr'
+
+except:
+    outputFilename = str(sys.argv[1]).split('.')[0]
+    outputFilename = outputFilename + '.scr'
 
 dwg = ezdxf.readfile(str(sys.argv[1]))
 modelspace = dwg.modelspace()
