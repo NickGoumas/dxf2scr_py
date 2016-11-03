@@ -24,6 +24,7 @@ debugMode = 0
 be converted to drill holes.'''
 drillThreshold = 0.25
 
+
 def setupScript():
     ''' Will add a switch flag for INCH or MM later. '''
     gridOutput = 'GRID {};\n'.format('INCH')
