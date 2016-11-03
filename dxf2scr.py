@@ -2,6 +2,7 @@ import sys
 import math
 import ezdxf
 
+'''Now allows one or two arguments.'''
 try:
     len(sys.argv[2])
     try:
